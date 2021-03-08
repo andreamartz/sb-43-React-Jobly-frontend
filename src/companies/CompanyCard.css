@@ -1,0 +1,22 @@
+.CompanyCard-Link {
+  color: black;
+}
+
+.CompanyCard-Link:hover {
+
+  color: 0056b3;
+  text-decoration: none;
+}
+
+.CompanyCard-Card {
+  margin-bottom: 1.25rem;
+  text-align: left;
+}
+
+.CompanyCard-Card:hover {
+  box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 3px 6px rgb(0 0 0 / 23%);
+}
+
+.CompanyCard-CardTitle {
+  font-weight: bold;
+}
