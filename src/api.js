@@ -34,6 +34,22 @@ class JoblyApi {
 
   // Individual API routes
 
+  // obviously, you'll add a lot here ...
+  /** Get a list of companies
+   * Can filter by partial name (?name=<stringToMatch>)
+   */
+
+  static async getCompanies(name) {
+    let res;
+    if (name) {
+      res = await this.request(`companies?name=${name}`);
+    } else {
+      res = await this.request('companies');
+    }
+
+    return res.companies;
+  }
+
   /** Get details on a company by handle. */
 
   static async getCompany(handle) {
