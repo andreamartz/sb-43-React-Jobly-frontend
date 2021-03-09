@@ -34,8 +34,25 @@ class JoblyApi {
 
   // Individual API routes
 
-  // obviously, you'll add a lot here ...
+  /** Authenticate and login a user
+   *  - returns a token
+  */
+  static async login(username, password) {
+    let res = await this.request("/auth/token", { username, password }, "post");
+    console.log("RES.TOKEN: ", res.token);
+    return res.token;
+  }
+
+    /** Authenticate and login a user
+   *  - returns a token
+  */
+  static async signup(username, password, firstName, lastName, email) {
+    let res = await this.request("/auth/register", { username, password, firstName, lastName, email}, "post");
+    console.log("RES.TOKEN: ", res.token);
+    return res.token;
+  }
   
+
   /** Get a list of companies
    * Can filter by partial name (?name=<stringToMatch>)
    */
@@ -53,6 +70,14 @@ class JoblyApi {
     return res.company;
   }
 
+  /** Get a list of jobs
+   * Can filter by partial job title (?name=<stringToMatch>)
+   */
+  
+  static async getJobs(title) {
+    let res = await this.request("jobs", { title });
+    return res.jobs;
+  }
 }
 
 // for now, put token ("testuser" / "password" on class)

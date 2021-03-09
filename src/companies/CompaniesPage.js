@@ -15,7 +15,7 @@
 
 import React, { useState, useEffect } from "react";
 import JoblyApi from "../api";
-import SearchForm from "../SearchForm";
+import SearchForm from "../common/SearchForm";
 import CompaniesList from "./CompaniesList";
 import "./CompaniesPage.css";
 
@@ -27,7 +27,6 @@ function CompaniesPage() {
    * - runs only on first render of this component
    */
   useEffect(() => {
-    console.log("INSIDE USEEFFECT ON COMP PAGE");
     search();
   }, []);
 
@@ -37,8 +36,6 @@ function CompaniesPage() {
    */
   async function search(searchTerm) {
     let companies = await JoblyApi.getCompanies(searchTerm);
-    console.log("COMPANIES: ", companies);
-    console.log("SEARCH TERM: ", searchTerm);
     setCompanies(companies);
     return companies;
   }
