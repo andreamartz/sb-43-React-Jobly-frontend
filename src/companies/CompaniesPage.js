@@ -7,11 +7,10 @@
  * Props: none
  * 
  * State:
- * - isLoading: boolean, has data loaded yet?
  * - companies to display in CompaniesList component
  * 
  * Hooks:
- * - useEffect to show 'Loading...' or page content
+ * - useEffect to retrieve all companies on initial page load
  */
 
 import React, { useState, useEffect } from "react";
@@ -21,58 +20,38 @@ import CompaniesList from "./CompaniesList";
 import "./CompaniesPage.css";
 
 function CompaniesPage() {
-  let tempCompanies = [
-    {
-      handle: "burton-ltd",
-      name: "Burton Ltd",
-      description: "Cover couple speech bar cell measure movement finally. Nation pull inside.",
-      numEmployees: 610,
-      logoUrl: "/logos/logo4.png"
-    },
-    {
-      "handle": "owen-newton",
-      name: "Owen-Newton",
-      "description": "Red compare try way. Bed standard again number wrong force. Stop exactly agent product economy someone. North describe site manager employee customer.",
-      "numEmployees": 953,
-      "logoUrl": null
-    },
-    {
-      "handle": "stone-stewart",
-      name: "Stone-Stewart",
-      "description": "Require successful family but. Traditional article late eight lose common send budget. Better opportunity law country various represent strong probably.",
-      "numEmployees": 459,
-      "logoUrl": null
-    }
-  ];
-
-  const [isLoading, setIsLoading] = useState(true);
-
-  const [companiesToDisplay, setCompaniesToDisplay] = useState(tempCompanies);
+  const [companies, setCompanies] = useState([]);
   
-  /** Load data from backend */
-  // useEffect(() => {
-  //   let companies = search();
-  //   setCompaniesToDisplay(companies);
-  // }, []);
+  /** Load data from backend
+   * - fetches all companies (i.e., unfiltered list)
+   * - runs only on first render of this component
+   */
+  useEffect(() => {
+    console.log("INSIDE USEEFFECT ON COMP PAGE");
+    search();
+  }, []);
 
+  /** search
+   * - takes a full or partial company name to search
+   * - returns an array of matching company objects 
+   */
   async function search(searchTerm) {
     let companies = await JoblyApi.getCompanies(searchTerm);
     console.log("COMPANIES: ", companies);
     console.log("SEARCH TERM: ", searchTerm);
-    // setIsLoading(false);
+    setCompanies(companies);
     return companies;
   }
-
-  // if (isLoading) {
-  //   return <p>Loading &hellip;</p>;
-  // }
 
   return (
     <div className="CompaniesPage">
       <SearchForm search={search}/>
-      <CompaniesList companies={companiesToDisplay}/> 
+      {companies.length
+        ? <CompaniesList companies={companies}/>
+        : <p>Sorry, no results were found!</p>
+      } 
     </div>
-  )
+  );
 }
 
 export default CompaniesPage;
