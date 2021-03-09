@@ -11,6 +11,10 @@
 # production
 /build
 
+# planning documents
+How-I-Built-Jobly-Frontend.docx
+jobly-props-and-state.docx
+
 # misc
 .DS_Store
 .env.local
