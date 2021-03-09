@@ -8,7 +8,6 @@
 
 import React, { useState } from "react";
 import { Button, Form, InputGroup, Input } from "reactstrap";
-// import JoblyApi from "./api";
 import "./SearchForm.css";
 
 const SearchForm = ({ search }) => {
@@ -27,20 +26,27 @@ const SearchForm = ({ search }) => {
   const handleSubmit = evt => {
     evt.preventDefault();
     let { searchTerm } = form;
-    search(searchTerm);
+    if (!searchTerm) {
+      search();
+    } else {
+      search(searchTerm);
+    }
   }
 
   return (
     <Form
       className="SearchForm"
+      onSubmit={handleSubmit}
     >
       <InputGroup>
         <Input 
           type="text"
           name="searchTerm"
           id="searchTerm"
+          value={form.searchTerm}
+          onChange={handleChange}
           placeholder="Enter search term..."
-          size="lg"
+          bsSize="lg"
         />
         <Button 
           type="submit" 
