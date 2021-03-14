@@ -8,7 +8,7 @@ import LoginForm from "../auth/LoginForm";
 import SignupForm from "../auth/SignupForm";
 import ProfileForm from "../profiles/ProfileForm";
 
-function Routes() {
+function Routes({ signup, login }) {
 
   return (
     <Switch>
@@ -25,10 +25,10 @@ function Routes() {
         <JobsPage />
       </Route>
       <Route exact path="/login">
-        <LoginForm />
+        <LoginForm login={login}/>
       </Route>
       <Route exact path="/signup">
-        <SignupForm />
+        <SignupForm signup={signup}/>
       </Route>
       <Route exact path="/profile">
         <ProfileForm />
