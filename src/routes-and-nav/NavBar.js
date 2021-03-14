@@ -30,7 +30,7 @@ function NavBar({ logout }) {
         <NavItem className="NavBar-logout">
           <NavLink to="/" onClick={logout}>
             {/* {`Log out ${currentUser.username}`} */}
-            Log Out
+            {`Log Out ${currentUser.username}`}
           </NavLink>
         </NavItem>
       </Nav>
