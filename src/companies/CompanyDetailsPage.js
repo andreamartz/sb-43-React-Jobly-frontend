@@ -31,14 +31,11 @@ function CompanyDetailsPage() {
    * - runs only on first render of this component
    */
   useEffect(() => {
-    console.log("INSIDE USEEFFECT ON COMP DETS PAGE - COMPANY IS: ", company);
     async function getCompany() {
       let company = await JoblyApi.getCompany(handle);
       setCompany(company);
-      return company;
     };
     getCompany();
-    console.log("COMPANY: ", company);
   }, [handle]);
 
   /** getCompany(handle)
