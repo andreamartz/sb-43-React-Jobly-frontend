@@ -12,11 +12,11 @@ import "./SignupForm.css";
 
 const SignupForm = ({ signup }) => {
   const [form, setForm] = useState({
-    username: "pickles", 
-    password: "pickles",
-    firstName: "Pickles",
-    lastName: "Pickles",
-    email: "pickles@pickles.com"
+    username: "", 
+    password: "",
+    firstName: "",
+    lastName: "",
+    email: ""
   });
 
   const handleChange = evt => {
@@ -62,8 +62,7 @@ const SignupForm = ({ signup }) => {
               type="text"
               name="username"
               id="username"
-              // value={form.username}
-              defaultValue="pickles"
+              value={form.username}
               onChange={handleChange}
               bsSize="md"
             />
@@ -76,8 +75,7 @@ const SignupForm = ({ signup }) => {
               type="text"
               name="password"
               id="password"
-              // value={form.password}
-              defaultValue="pickles"
+              value={form.password}
               onChange={handleChange}
               bsSize="md"
             />
@@ -90,8 +88,7 @@ const SignupForm = ({ signup }) => {
               type="text"
               name="firstName"
               id="firstName"
-              // value={form.firstName}
-              defaultValue="pickles"
+              value={form.firstName}
               onChange={handleChange}
               bsSize="md"
             />
@@ -104,8 +101,7 @@ const SignupForm = ({ signup }) => {
               type="text"
               name="lastName"
               id="lastName"
-              // value={form.lastName}
-              defaultValue="pickles"
+              value={form.lastName}
               onChange={handleChange}
               bsSize="md"
             />
@@ -118,8 +114,7 @@ const SignupForm = ({ signup }) => {
               type="text"
               name="email"
               id="email"
-              // value={form.email}
-              defaultValue="pickles"
+              value={form.email}
               onChange={handleChange}
               bsSize="md"
             />
