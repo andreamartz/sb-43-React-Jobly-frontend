@@ -52,15 +52,18 @@ class JoblyApi {
     return res.token;
   }
 
-    /** Authenticate and login a user
+  /** Authenticate and login a user
    *  - returns a token
   */
-  static async signup(username, password, firstName, lastName, email) {
-    let res = await this.request("/auth/register", { username, password, firstName, lastName, email}, "post");
-    console.log("RES.TOKEN: ", res.token);
+  static async login(username, password) {
+    let res = await this.request("auth/token", { username, password }, "post");
     return res.token;
   }
-  
+
+  static async getCurrentUser(username) {
+    let res = await this.request(`users/${username}`, {}, "get");
+    return res.user;
+  }
 
   /** Get a list of companies
    * Can filter by partial name (?name=<stringToMatch>)
