@@ -14,7 +14,17 @@ import UserContext from "./auth/UserContext";
 import './App.css';
 
 function App() {
-  const [token, setToken] = useState("");
+  async function signup(username, password, firstName, lastName, email) {
+    try {
+      const token = await JoblyApi.signup(username, password, firstName, lastName, email);
+      console.log("TOKEN from App: ", token);
+      setToken(token);
+      return { success: true };
+    } catch (err) {
+      console.error("Signup failed. Errors: ", err);
+      return { success: false, err };
+    }
+  }
 
   return (
     <div className="App">

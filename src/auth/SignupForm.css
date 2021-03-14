@@ -1,0 +1,25 @@
+.SignupForm {
+  margin: 0 auto;
+  padding-top: 3rem;
+  text-align: left;
+  width: 30%;
+}
+
+.SignupForm-FormContainer {
+  background-color: white;
+  border: 1px solid lightgray;
+  margin: 0 auto;
+  padding: .5rem;
+  text-align: left;
+  width: 100%;
+}
+
+.SignupForm-Form {
+  margin: 0 auto;
+  padding: 1rem;
+  width: 100%;
+}
+
+.SignupForm-SubmitButton {
+  text-align: right;
+}
