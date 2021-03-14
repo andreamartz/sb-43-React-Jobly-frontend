@@ -1,0 +1,10 @@
+.HomePage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+}
+
+.HomePage-Button {
+  margin: 10px;
+}
