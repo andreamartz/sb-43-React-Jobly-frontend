@@ -29,10 +29,12 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <NavBar />
-        <main className="App-main">
-          <Routes />
-        </main>
+        <UserContext.Provider value={{ currentUser }}>
+          <NavBar logout={ logout }/>
+          <main className="App-main">
+            <Routes login={ login } signup={ signup }/>
+          </main>
+        </UserContext.Provider>
       </BrowserRouter>
     </div>
   );
