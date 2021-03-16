@@ -17,13 +17,14 @@
  * Routing path: /login
  */
 
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
-import UserContext from "./UserContext";
+import Alert from "../common/Alert";
 import "./LoginForm.css";
 
 const LoginForm = ({ login }) => {
-  const { currentUser } = useContext(UserContext);
+  const history = useHistory();
   const [form, setForm] = useState({
     username: "", password: ""
   });
