@@ -34,31 +34,43 @@ class JoblyApi {
 
   // Individual API routes
 
-  /** Authenticate and login a user
+  /** Signup a user
    *  - returns a token
   */
-  static async login(username, password) {
-    let res = await this.request("/auth/token", { username, password }, "post");
+  static async signup(username, password, firstName, lastName, email) {
+    let res = await this.request(
+      "auth/register", 
+      { username,
+        password,
+        firstName,
+        lastName,
+        email
+      }, 
+      "post"
+    );
     console.log("RES.TOKEN: ", res.token);
     return res.token;
   }
 
-    /** Authenticate and login a user
+  /** Authenticate and login a user
    *  - returns a token
   */
-  static async signup(username, password, firstName, lastName, email) {
-    let res = await this.request("/auth/register", { username, password, firstName, lastName, email}, "post");
-    console.log("RES.TOKEN: ", res.token);
+  static async login(username, password) {
+    let res = await this.request("auth/token", { username, password }, "post");
     return res.token;
   }
-  
+
+  static async getCurrentUser(username) {
+    let res = await this.request(`users/${username}`, {}, "get");
+    return res.user;
+  }
 
   /** Get a list of companies
    * Can filter by partial name (?name=<stringToMatch>)
    */
 
   static async getCompanies(name) {
-    let res = await this.request("companies", { name });
+    let res = await this.request("companies", { name }, "get");
     return res.companies;
   }
 
@@ -79,10 +91,5 @@ class JoblyApi {
     return res.jobs;
   }
 }
-
-// for now, put token ("testuser" / "password" on class)
-JoblyApi.token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZ" +
-    "SI6InRlc3R1c2VyIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTU5ODE1OTI1OX0." +
-    "FtrMwBQwe6Ue-glIFgz_Nf8XxRT2YecFCiSpYL0fCXc";
 
 export default JoblyApi;
