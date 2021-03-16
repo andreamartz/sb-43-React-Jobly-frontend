@@ -30,6 +30,13 @@ const LoginForm = ({ login }) => {
   });
   const [formErrors, setFormErrors] = useState([]);
 
+  console.debug(
+    "LoginForm",
+    "login=", typeof login,
+    "formData=", form,
+    "formErrors", formErrors
+  );
+
   /** Update form data in state */
   const handleChange = evt => {
     const { name, value } = evt.target;
