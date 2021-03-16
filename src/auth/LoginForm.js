@@ -1,9 +1,20 @@
 /** LoginForm
  * 
+ * Purposes: 
+ * - display a form to login
+ *   - as user types in the form, keeps track of form data in state
+ * - on form submission: 
+ *   - authenticates a user and grants them access to according to their permissions
+ *   - if successful login, redirects to /companies route
+ * 
  * Props: none
  * 
  * State:
  * - form data
+ * 
+ * Routes -> LoginForm ->
+ * 
+ * Routing path: /login
  */
 
 import React, { useState, useContext } from "react";
@@ -17,6 +28,7 @@ const LoginForm = ({ login }) => {
     username: "", password: ""
   });
 
+  /** Update form data in state */
   const handleChange = evt => {
     const { name, value } = evt.target;
     setForm(f => ({
@@ -76,6 +88,8 @@ const LoginForm = ({ login }) => {
               bsSize="md"
             />
           </FormGroup>
+          {/* Display errors, if any */}
+          {formErrors
           <div className="LoginForm-SubmitButton">
             <Button 
               type="submit" 
