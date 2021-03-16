@@ -27,6 +27,7 @@ const LoginForm = ({ login }) => {
   const [form, setForm] = useState({
     username: "", password: ""
   });
+  const [formErrors, setFormErrors] = useState([]);
 
   /** Update form data in state */
   const handleChange = evt => {
@@ -88,8 +89,12 @@ const LoginForm = ({ login }) => {
               bsSize="md"
             />
           </FormGroup>
+
           {/* Display errors, if any */}
           {formErrors
+            ? <Alert type="danger" messages={formErrors} />
+            : null
+          }
           <div className="LoginForm-SubmitButton">
             <Button 
               type="submit" 
