@@ -72,6 +72,7 @@ const LoginForm = ({ login }) => {
               name="username"
               id="username"
               value={form.username}
+              required
               onChange={handleChange}
               bsSize="md"
             />
@@ -85,6 +86,7 @@ const LoginForm = ({ login }) => {
               name="password"
               id="password"
               value={form.password}
+              required
               onChange={handleChange}
               bsSize="md"
             />
