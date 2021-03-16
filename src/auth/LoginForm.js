@@ -25,10 +25,20 @@ const LoginForm = ({ login }) => {
     }));
   }
 
+  /** fcn handleSubmit 
+   * Handles form submission
+   *   - calls login fcn prop and...
+   *   -...if successful, redirects to /companies
+   */
   const handleSubmit = async evt => {
     evt.preventDefault();
     const { username, password } = form;
-    await login(username, password);
+    const result = await login(username, password);
+    if (result.success) {
+      history.push("/companies");
+    } else {
+      setFormErrors(result.data.error);
+    }
   }
 
   return (
