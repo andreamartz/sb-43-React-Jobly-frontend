@@ -6,15 +6,16 @@
  * - re-render the app when token state changes
  * - hold the fcns related to auth (i.e., signup, login, logout)
  * 
- * 
  * Props: none
  * 
  * State:
  * - infoLoaded: boolean, has user data been pulled from API yet?
  *   > this manages the display of the loading message
+ * 
  * - currentUser: user object from the API
  *   > this is how we'll know if someone is logged in
  *   > this obj is accessible throughout app via UserContext
+ * 
  * - token: for logged in users, this is their authentication JWT
  *   > is required to be set for most API calls
  *   > it is initially read from localStorage
@@ -39,6 +40,7 @@ function App() {
   const [token, setToken] = useLocalStorage(TOKEN_STORAGE_KEY);
   const [currentUser, setCurrentUser] = useState(null);
   const [infoLoaded, setInfoLoaded] = useState(false);
+  const [applicationIds, setApplicationIds] = useState(new Set([]));
 
   console.debug(
     "App",
@@ -126,31 +128,61 @@ function App() {
   }
 
   /** fcn logout
-   * Handles site-wide log out 
+   * - handles site-wide log out 
+   * - passed down as a prop to Navbar
   */
   function logout() {
     setCurrentUser(null);
     setToken(null);
   }
 
+  /** fcn updateProfile
+   * - updates user profile
+   * - passed down as a prop to ProfileForm
+   */
+  async function updateProfile(username, userData) {
+    try {
+      let user = await JoblyApi.updateUserProfile(username, userData);
+      return { user, success: true };
+    } catch (err) {
+      console.error("Signup failed. Errors: ", err);
+      return { success: false, err };
+    }
+  }
+
   /** fcn hasAppliedToJob
    * Checks if a job has been applied for
    */
+  function hasAppliedToJob(jobId) {
+    return applicationIds.has(jobId);
+  }
 
   /** fcn applyToJob
    * - Apply to a job by calling API
-   * - update set of applicaiton IDs
+   * - update set of application IDs
+   * 
+   * Returns  {"applied": jobId}
    */
+  async function applyToJob(jobId) {
+    if (hasAppliedToJob(jobId)) return;
+    const jobAppStatus = await JoblyApi.applyToJob(currentUser.username, jobId);
+    setApplicationIds(new Set([...applicationIds, jobId]));
+    return jobAppStatus;
+  }
 
   if (!infoLoaded) return <LoadingMessage />;
 
   return (
     <div className="App">
       <BrowserRouter>
-        <UserContext.Provider value={{ currentUser }}>
+        <UserContext.Provider value={{ currentUser, setCurrentUser, hasAppliedToJob, applyToJob }}>
           <NavBar logout={ logout }/>
           <main className="App-main">
-            <Routes login={ login } signup={ signup }/>
+            <Routes 
+              login={ login } 
+              signup={ signup } 
+              update={updateProfile}
+            />
           </main>
         </UserContext.Provider>
       </BrowserRouter>

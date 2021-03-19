@@ -55,6 +55,7 @@ const LoginForm = ({ login }) => {
     evt.preventDefault();
     const { username, password } = form;
     const result = await login(username, password);
+    console.log("RESULT: ", result);
     if (result.success) {
       history.push("/companies");
     } else {

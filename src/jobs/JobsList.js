@@ -13,6 +13,7 @@ const JobsList = (props) => {
       {props.jobs.map(j => 
         <JobCard
           key={j.id}
+          jobId={j.id}
           title={j.title}
           company={j.companyName}
           salary={j.salary} 

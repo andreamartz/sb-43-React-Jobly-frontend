@@ -28,6 +28,7 @@ class JoblyApi {
     } catch (err) {
       console.error("API Error:", err.response);
       let message = err.response.data.error.message;
+      console.debug("MESSAGE: ", message);
       throw Array.isArray(message) ? message : [message];
     }
   }
@@ -48,7 +49,6 @@ class JoblyApi {
       }, 
       "post"
     );
-    console.log("RES.TOKEN: ", res.token);
     return res.token;
   }
 
@@ -56,13 +56,32 @@ class JoblyApi {
    *  - returns a token
   */
   static async login(username, password) {
-    let res = await this.request("auth/token", { username, password }, "post");
-    return res.token;
+    try {
+      let res = await this.request("auth/token", { username, password }, "post");
+      return res.token;
+    } catch (err) {
+      console.error("ERR: ", err);
+    }
+
   }
 
+  /** Get a user by username */
   static async getCurrentUser(username) {
     let res = await this.request(`users/${username}`, {}, "get");
     return res.user;
+  }
+
+  /** Update user information */
+  static async updateUserProfile(username, userData) {
+    let res = await this.request(`users/${username}`, userData, "patch");
+    return res.user;
+  }
+
+  /** Update userApplied for a specific user-job combo */
+
+  static async applyToJob(username, jobId) {
+    let jobAppStatus = await this.request(`users/${username}/jobs/${jobId}`, {}, "post");
+    return jobAppStatus;
   }
 
   /** Get a list of companies
