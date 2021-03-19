@@ -1,23 +1,42 @@
-/** SignupForm
+/** ProfileForm
+ * 
+ * Purpose: 
+ * - display form where user can edit profile info (first name, last name, and email)
+ * - form submission calls the API to save and triggers user reloading throughout the site
  * 
  * Props: none
  * 
  * State:
  * - form data
+ * 
+ * Routing path /profile
+ * Routes -> ProfileForm -> Alert
  */
 
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import UserContext from "../auth/UserContext";
 import "./ProfileForm.css";
 
-const ProfileForm = () => {
+const ProfileForm = ({ update }) => {
+  const { currentUser, setCurrentUser } = useContext(UserContext);
+
   const [form, setForm] = useState({
-    username: "", 
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: ""
+    username: currentUser.username,
+    firstName: currentUser.firstName,
+    lastName: currentUser.lastName,
+    email: currentUser.email,
+    password: "",
   });
+
+  const [formErrors, setFormErrors] = useState([]);
+
+  console.debug(
+    "ProfileForm",
+    "currentUser=", currentUser,
+    "formData=", form,
+    "formErrors=", formErrors
+);
 
   const handleChange = evt => {
     const { name, value } = evt.target;
@@ -27,15 +46,38 @@ const ProfileForm = () => {
     }));
   }
 
-  const handleSubmit = evt => {
+  /** on form submit:
+   * - attempt to save to backend & report any errors
+   * - if successful:
+   *   - clear previous error messages and password
+   *   - show save-confirmed message
+   *   - set current user info throughout the site
+   */
+
+  async function handleSubmit(evt) {
     evt.preventDefault();
+    const { username } = form;
     const { 
-      username, 
       firstName,
       lastName,
       email,
       password
     } = form;
+
+    const userData = {firstName, lastName, email, password};
+
+    const res = await update(username, userData);
+
+    if (res.success) {
+      setForm(f => ({ ...f, password: "" }));
+      setFormErrors([]);
+
+      // trigger reloading of user information throughout the site
+      setCurrentUser(res.user);
+    } else {
+      setFormErrors(res.errors);
+      return;
+    }
   }
 
   return (
@@ -50,14 +92,7 @@ const ProfileForm = () => {
             <Label>
               Username
             </Label>
-            <Input 
-              type="text"
-              name="username"
-              id="username"
-              value={form.username}
-              onChange={handleChange}
-              bsSize="md"
-            />
+            <p>{ currentUser.username }</p>
           </FormGroup>
           <FormGroup>
             <Label>
@@ -103,7 +138,7 @@ const ProfileForm = () => {
               Confirm password to make changes:
             </Label>
             <Input 
-              type="text"
+              type="password"
               name="password"
               id="password"
               value={form.password}

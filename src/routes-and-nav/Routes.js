@@ -9,7 +9,7 @@ import LoginForm from "../auth/LoginForm";
 import SignupForm from "../auth/SignupForm";
 import ProfileForm from "../profiles/ProfileForm";
 
-function Routes({ signup, login }) {
+function Routes({ signup, login, update }) {
 
   return (
     <Switch>
@@ -31,9 +31,9 @@ function Routes({ signup, login }) {
       <Route exact path="/signup">
         <SignupForm signup={signup}/>
       </Route>
-      <Route exact path="/profile">
-        <ProfileForm />
-      </Route>
+      <PrivateRoute exact path="/profile">
+        <ProfileForm update={update}/>
+      </PrivateRoute>
       <Route>
         <p>Hmmm. I can't seem to find what you want.</p>
       </Route>
